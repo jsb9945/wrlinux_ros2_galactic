@@ -31,9 +31,16 @@
         git am -p2 4e7ce48fc62329b36f9a56b5713bd46eb8256b2a.patch
         curl -O https://github.com/ros/meta-ros/commit/7479cfe0279e7cdc094c02a3cc6f04e8b0a1fb38.patch
         git am -p2 7479cfe0279e7cdc094c02a3cc6f04e8b0a1fb38.patch
-        cd ..      
+        cd ..
+
+6. OpenBLAS 설정 변경
+
+        # wr-ros/recipes-extended/suitesparse/suitesparse-cholmod_5.4.0.bb
+        # wr-ros/recipes-extended/suitesparse/suitesparse-spqr_5.4.0.bb
+        # 위 파일에서 '-lopenblas' 삭제
+        
  
-6. nxp-s32g2xx에서 source.codeaurora.org 참조 변경
+8. nxp-s32g2xx에서 source.codeaurora.org 참조 변경
 
         # nxp-s32g2xx/recipes-bsp/arm-trusted-firmware/atf-s32g_2.5.bb
         URL ?= "git://github.com/nxp-auto-linux/arm-trusted-firmware.git;protocol=http"
@@ -41,12 +48,12 @@
         # nxp-s32g2xx/recipes-bsp/u-boot/u-boot-s32_2020.04.bb
         SRC_URI:prepend = "git://github.com/nxp-auto-linux/u-boot.git;protocol=https;branch=release/bsp32.0-2020.04"
 
-7. WorkSpace 디렉토리로 돌아와서 수행
+9. WorkSpace 디렉토리로 돌아와서 수행
 
         . ./environment-setup-x86_64-wrlinuxsdk-linux
         . ./oe-init-build-env wrlinux-lts21-ros2
 
-8. bitbake layer 구성
+10. bitbake layer 구성
 
         cd $BUILDDIR
         bitbake-layers add-layer $(readlink -f $BUILDDIR/../layers)/meta-ros/meta-ros-common
@@ -54,7 +61,7 @@
         bitbake-layers add-layer $(readlink -f $BUILDDIR/../layers)/meta-ros/meta-ros2-galactic
         bitbake-layers add-layer $(readlink -f $BUILDDIR/../layers)/wr-ros
 
-9. cd $BUILDDIR/conf/local.conf에 추가
+11. cd $BUILDDIR/conf/local.conf에 추가
 
         BB_NO_NETWORK = '0'
         BB_NUMBER_THREAD = "1"
@@ -126,5 +133,9 @@
         # ROS_WORLD_SKIP_GROUPS_remove = "gazebo"
         ROS_WORLD_SKIP_GROUPS += " libomp "
 
-10. 
-11. 
+12. Wind River Linux + ROS2 빌드
+
+        bitbake wrlinux-image-std
+
+13. 
+14. 
