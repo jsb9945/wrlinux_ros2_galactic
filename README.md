@@ -1,5 +1,9 @@
 # wrlinux_ros2_galactic
 
+빌드 환경 : intel 64, Ubuntu 20.04
+타겟 보드 : NXP-S32G
+타겟 리눅스 : WRLinux-LTS21
+
 1. Wind River Linux setup tool 다운:
 
         git clone -b WRLINUX_10_21_BASE https://github.com/WindRiver-Labs/wrlinux-x.git
@@ -137,5 +141,8 @@
 
         bitbake wrlinux-image-std
 
-13. 
-14. 
+13. SD카드에 이미지 write
+
+        cd $BUILDDIR/tmp-glibc/deploy/images/nxp-s32g
+        sudo dd if=<path/.wic> of=/dev/<sdcard_dev> bs=1M&&sync
+
